@@ -1,0 +1,518 @@
+Write a program to print the area and perimeter of a triangle having sides of 3, 4 and 5
+units by creating a class named \'Triangle\' with a function to print the area and
+perimeter.
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+class Triangle {
+private:
+    float side1, side2, side3;
+
+public:
+    // Constructor to initialize the sides of the triangle
+    Triangle(float s1, float s2, float s3) : side1(s1), side2(s2), side3(s3) {}
+
+    // Function to calculate the area of the triangle
+    float calculateArea() {
+        float s = (side1 + side2 + side3) / 2;
+        return sqrt(s * (s - side1) * (s - side2) * (s - side3));
+    }
+
+    // Function to calculate the perimeter of the triangle
+    float calculatePerimeter() {
+        return side1 + side2 + side3;
+    }
+};
+
+int main() {
+    // Create an object of the Triangle class with sides 3, 4, and 5 units
+    Triangle triangle(3, 4, 5);
+
+    // Calculate and print the area and perimeter of the triangle
+    cout << "Area of the triangle: " << triangle.calculateArea() << " square units" << endl;
+    cout << "Perimeter of the triangle: " << triangle.calculatePerimeter() << " units" << endl;
+
+    return 0;
+}
+
+Create a class \'Degree\' having a function \'getDegree\' that prints \"I got a degree\". It
+has two subclasses namely \'Undergraduate\' and \'Postgraduate\' each having a
+function with the same name that prints \"I am an Undergraduate\" and \"I am a
+Postgraduate\" respectively. Call the function by creating an object of each of the three
+classes.
+#include <iostream>
+
+using namespace std;
+
+class Degree {
+public:
+    void getDegree() {
+        cout << "I got a degree" << endl;
+    }
+};
+
+class Undergraduate : public Degree {
+public:
+    void getDegree() {
+        cout << "I am an Undergraduate" << endl;
+    }
+};
+
+class Postgraduate : public Degree {
+public:
+    void getDegree() {
+        cout << "I am a Postgraduate" << endl;
+    }
+};
+
+int main() {
+    Degree d;
+    Undergraduate ug;
+    Postgraduate pg;
+
+    d.getDegree();
+    ug.getDegree();
+    pg.getDegree();
+
+    return 0;
+}
+
+A boy has his money deposited Rs 10000, RS 15000 and Rs20000 in banks-Bank A,
+Bank B and Bank C respectively. We have to print the money deposited by him in a
+#include <iostream>
+
+using namespace std;
+
+class Bank {
+public:
+    virtual int getBalance() {
+        return 0;
+    }
+};
+
+class BankA : public Bank {
+public:
+    int getBalance() override {
+        return 10000;
+    }
+};
+
+class BankB : public Bank {
+public:
+    int getBalance() override {
+        return 15000;
+    }
+};
+
+class BankC : public Bank {
+public:
+    int getBalance() override {
+        return 20000;
+    }
+};
+
+int main() {
+    BankA bankA;
+    BankB bankB;
+    BankC bankC;
+
+    cout << "Money deposited in Bank A: " << bankA.getBalance() << " Rs" << endl;
+    cout << "Money deposited in Bank B: " << bankB.getBalance() << " Rs" << endl;
+    cout << "Money deposited in Bank C: " << bankC.getBalance() << " Rs" << endl;
+
+    return 0;
+}
+
+All the banks operating in India are controlled by RBI. RBI has set a well defined
+guideline (e.g. minimum interest rate, minimum balance allowed, maximum withdrawal
+limit etc) which all banks must follow. For example, suppose RBI has set minimum
+interest rate applicable to a saving bank account to be 4% a
+#include <iostream>
+
+using namespace std;
+
+// Base class RBI (Reserve Bank of India)
+class RBI {
+protected:
+    float minInterestRate;
+
+public:
+    // Constructor to initialize the minimum interest rate
+    RBI(float minRate) : minInterestRate(minRate) {}
+
+    // Virtual function to display RBI guidelines
+    virtual void displayGuidelines() {
+        cout << "RBI Guidelines:" << endl;
+        cout << "Minimum interest rate: " << minInterestRate << "%" << endl;
+    }
+};
+
+// Derived class Account representing bank accounts
+class Account {
+protected:
+    float balance;
+
+public:
+    // Constructor to initialize the balance
+    Account(float initialBalance) : balance(initialBalance) {}
+
+    // Function to display account details
+    virtual void displayAccount() {
+        cout << "Account Details:" << endl;
+        cout << "Balance: Rs. " << balance << endl;
+    }
+
+    // Virtual function for deposit operation
+    virtual void deposit(float amount) {
+        balance += amount;
+        cout << "Rs. " << amount << " deposited successfully." << endl;
+    }
+
+    // Virtual function for withdrawal operation
+    virtual void withdraw(float amount) {
+        if (balance >= amount) {
+            balance -= amount;
+            cout << "Rs. " << amount << " withdrawn successfully." << endl;
+        } else {
+            cout << "Insufficient balance." << endl;
+        }
+    }
+};
+
+// Derived class SBI (State Bank of India)
+class SBI : public RBI, public Account {
+public:
+    // Constructor to initialize RBI guidelines and initial balance
+    SBI(float minRate, float initialBalance)
+        : RBI(minRate), Account(initialBalance) {}
+
+    // Function to display SBI-specific guidelines
+    void displayGuidelines() override {
+        RBI::displayGuidelines(); // Display RBI guidelines
+        cout << "SBI Specific Guidelines:" << endl;
+        cout << "Minimum balance allowed: Rs. 5000" << endl;
+    }
+};
+
+// Derived class ICICI (ICICI Bank)
+class ICICI : public RBI, public Account {
+public:
+    // Constructor to initialize RBI guidelines and initial balance
+    ICICI(float minRate, float initialBalance)
+        : RBI(minRate), Account(initialBalance) {}
+
+    // Function to display ICICI-specific guidelines
+    void displayGuidelines() override {
+        RBI::displayGuidelines(); // Display RBI guidelines
+        cout << "ICICI Specific Guidelines:" << endl;
+        cout << "Minimum balance allowed: Rs. 10000" << endl;
+    }
+};
+
+int main() {
+    // Create SBI and ICICI accounts
+    SBI sbi(4.0, 10000);    // Minimum interest rate: 4%, Initial balance: Rs. 10000
+    ICICI icici(4.0, 15000); // Minimum interest rate: 4%, Initial balance: Rs. 15000
+
+    // Display guidelines and account details for SBI
+    cout << "SBI Guidelines:" << endl;
+    sbi.displayGuidelines();
+    cout << endl;
+    sbi.displayAccount();
+    cout << endl;
+
+    // Display guidelines and account details for ICICI
+    cout << "ICICI Guidelines:" << endl;
+    icici.displayGuidelines();
+    cout << endl;
+    icici.displayAccount();
+    cout << endl;
+
+    // Perform deposit and withdrawal operations
+    sbi.deposit(5000);
+    sbi.withdraw(2000);
+    cout << "Updated SBI account details:" << endl;
+    sbi.displayAccount();
+    cout << endl;
+
+    icici.deposit(10000);
+    icici.withdraw(5000);
+    cout << "Updated ICICI account details:" << endl;
+    icici.displayAccount();
+    cout << endl;
+
+    return 0;
+}
+
+Write a C++ code to find area of square and circle using abstract class and pure virtual
+function.
+#include <iostream>
+
+using namespace std;
+
+// Abstract class Shape
+class Shape {
+public:
+    // Pure virtual function to calculate the area
+    virtual float calculateArea() = 0;
+};
+
+// Derived class Square
+class Square : public Shape {
+private:
+    float side;
+
+public:
+    // Constructor to initialize the side of the square
+    Square(float s) : side(s) {}
+
+    // Implementation of the pure virtual function to calculate the area of the square
+    float calculateArea() override {
+        return side * side;
+    }
+};
+
+// Derived class Circle
+class Circle : public Shape {
+private:
+    float radius;
+
+public:
+    // Constructor to initialize the radius of the circle
+    Circle(float r) : radius(r) {}
+
+    // Implementation of the pure virtual function to calculate the area of the circle
+    float calculateArea() override {
+        return 3.14 * radius * radius;
+    }
+};
+
+int main() {
+    // Create objects of Square and Circle classes
+    Square square(5); // Square with side 5 units
+    Circle circle(3); // Circle with radius 3 units
+
+    // Calculate and display the area of the square
+    cout << "Area of the square: " << square.calculateArea() << " square units" << endl;
+
+    // Calculate and display the area of the circle
+    cout << "Area of the circle: " << circle.calculateArea() << " square units" << endl;
+
+    return 0;
+}
+
+In C++ programming, this is a keyword that refers to the current instance of the class.
+Create class called Employee with attributes: int empid char(20), float salary. Use this
+pointer to refer to current instance and display the employee details.
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+class Employee {
+private:
+    int empid;
+    char name[20];
+    float salary;
+
+public:
+    // Constructor to initialize empid, name, and salary
+    Employee(int id, const char* n, float sal) : empid(id), salary(sal) {
+        strcpy(name, n);
+    }
+
+    // Function to display employee details
+    void displayDetails() {
+        cout << "Employee ID: " << empid << endl;
+        cout << "Name: " << name << endl;
+        cout << "Salary: " << salary << endl;
+    }
+
+    // Function to display employee details using this pointer
+    void displayUsingThis() {
+        cout << "Employee ID: " << this->empid << endl;
+        cout << "Name: " << this->name << endl;
+        cout << "Salary: " << this->salary << endl;
+    }
+};
+
+int main() {
+    // Create an object of the Employee class
+    Employee emp(101, "John", 50000);
+
+    // Display employee details
+    cout << "Employee details without using this pointer:" << endl;
+    emp.displayDetails();
+    cout << endl;
+
+    // Display employee details using this pointer
+    cout << "Employee details using this pointer:" << endl;
+    emp.displayUsingThis();
+
+    return 0;
+}
+
+#include <iostream>
+
+using namespace std;
+
+// Function to find the Nth Fibonacci number
+int findNthFibonacci(int n) {
+    int a = 0, b = 1;
+    if (n == 0) {
+        return a;
+    } else if (n == 1) {
+        return b;
+    } else {
+        int fib;
+        for (int i = 2; i <= n; ++i) {
+            fib = a + b;
+            a = b;
+            b = fib;
+        }
+        return fib;
+    }
+}
+
+int main() {
+    int n;
+    cout << "Enter the value of N: ";
+    cin >> n;
+
+    // Check if n is non-negative
+    if (n < 0) {
+        cout << "N should be a non-negative integer." << endl;
+    } else {
+        // Find the Nth Fibonacci number
+        int nthFibonacci = findNthFibonacci(n);
+        cout << "The " << n << "th Fibonacci number is: " << nthFibonacci << endl;
+    }
+
+    return 0;
+}
+
+count words in a paragraph
+#include <iostream>
+#include <string>
+#include <sstream>
+
+using namespace std;
+
+// Function to count the number of words in a paragraph
+int countWords(const string& paragraph) {
+    stringstream ss(paragraph);
+    string word;
+    int count = 0;
+    // Count words using stringstream
+    while (ss >> word) {
+        count++;
+    }
+    return count;
+}
+
+int main() {
+    string paragraph;
+    cout << "Enter the paragraph: ";
+    getline(cin, paragraph);
+
+    // Count the number of words in the paragraph
+    int wordCount = countWords(paragraph);
+    cout << "Number of words in the paragraph: " << wordCount << endl;
+
+    return 0;
+}
+
+prime number range from M to N
+#include <iostream>
+
+using namespace std;
+
+// Function to check if a number is prime
+bool isPrime(int num) {
+    if (num <= 1) {
+        return false;
+    }
+    for (int i = 2; i * i <= num; ++i) {
+        if (num % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// Function to print prime numbers in the range from M to N
+void printPrimesInRange(int M, int N) {
+    cout << "Prime numbers between " << M << " and " << N << " are:" << endl;
+    for (int i = M; i <= N; ++i) {
+        if (isPrime(i)) {
+            cout << i << " ";
+        }
+    }
+    cout << endl;
+}
+
+int main() {
+    int M, N;
+    cout << "Enter the range (M and N): ";
+    cin >> M >> N;
+
+    // Check if the range is valid
+    if (M <= N) {
+        // Print prime numbers in the range from M to N
+        printPrimesInRange(M, N);
+    } else {
+        cout << "Invalid range! M should be less than or equal to N." << endl;
+    }
+
+    return 0;
+}
+
+#include <iostream>
+
+using namespace std;
+
+// Function to merge or concatenate two arrays
+void mergeArrays(int arr1[], int size1, int arr2[], int size2, int result[]) {
+    // Copy elements of first array to result array
+    for (int i = 0; i < size1; ++i) {
+        result[i] = arr1[i];
+    }
+
+    // Copy elements of second array to result array
+    for (int i = 0; i < size2; ++i) {
+        result[size1 + i] = arr2[i];
+    }
+}
+
+// Function to display elements of an array
+void displayArray(int arr[], int size) {
+    for (int i = 0; i < size; ++i) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    int arr1[] = {1, 2, 3, 4};
+    int size1 = sizeof(arr1) / sizeof(arr1[0]);
+
+    int arr2[] = {5, 6, 7};
+    int size2 = sizeof(arr2) / sizeof(arr2[0]);
+
+    // Calculate the size of the result array
+    int size3 = size1 + size2;
+
+    // Declare result array with size equal to the sum of sizes of arr1 and arr2
+    int result[size3];
+
+    // Merge or concatenate arrays
+    mergeArrays(arr1, size1, arr2, size2, result);
+
+    // Display the merged array
+    cout << "Merged array: ";
+    displayArray(result, size3);
+
+    return 0;
+}
