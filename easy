@@ -1,0 +1,322 @@
+ Given an array arr[] of length N and Q queries of 3 types (1, 2, 3) whose operations are
+as follows: Type 1: query has input as 1 and the task is to reverse the array. Type 2:
+query has input as (2 x) and the task to find the index of x in the result array. Type 3:
+query has input as (3 x y) and the task is to swap the elements at index x and y in the
+array. The task is to print the result for the query of type 2.
+#include <iostream>
+#include <vector>
+using namespace std;
+void reverseArray(vector<int>& arr) {
+    int start = 0, end = arr.size() - 1;
+    while (start < end) {
+        swap(arr[start], arr[end]);
+        start++;
+        end--;
+    }
+}
+int findIndex(const vector<int>& arr, int x) {
+    for (int i = 0; i < arr.size(); ++i) {
+        if (arr[i] == x) {
+            return i;
+        }
+    }
+    return -1; // If element is not found
+}
+void swapElements(vector<int>& arr, int x, int y) {
+    swap(arr[x], arr[y]);
+}
+int main() {
+    int N;
+    cout << "Enter the size of the array: ";
+    cin >> N;
+    vector<int> arr(N);
+    cout << "Enter the elements of the array: ";
+    for (int i = 0; i < N; ++i) {
+        cin >> arr[i];
+    }
+    int Q;
+    cout << "Enter the number of queries: ";
+    cin >> Q;
+    while (Q--) {
+        int queryType;
+        cin >> queryType;
+        if (queryType == 1) { // Reverse array
+            reverseArray(arr);
+        } else if (queryType == 2) { // Find index
+            int x;
+            cin >> x;
+            int index = findIndex(arr, x);
+            if (index != -1) {
+                cout << "Index of " << x << " is: " << index << endl;
+            } else {
+                cout << "Element " << x << " not found in the array" << endl;
+            }
+        } else if (queryType == 3) { // Swap elements
+            int x, y;
+            cin >> x >> y;
+            swapElements(arr, x, y);
+        }
+    }
+    return 0;
+}
+
+ Given an array A[] of n numbers and another number x, the task is to check whether or
+not there exist two elements in A[] whose sum is exactly x.
+#include <iostream>
+#include <algorithm>
+using namespace std;
+bool hasPairWithSum(int arr[], int n, int x) {
+    sort(arr, arr + n);
+    int left = 0, right = n - 1;
+    while (left < right) {
+        int sum = arr[left] + arr[right];
+        if (sum == x) {
+            return true; // Found two elements whose sum is x
+        } else if (sum < x) {
+            left++; // Move left pointer to increase the sum
+        } else {
+            right--; // Move right pointer to decrease the sum
+        }
+    }
+    return false;
+}
+int main() {
+    int n;
+    cout << "Enter the size of the array: ";
+    cin >> n;
+    int arr[n];
+    cout << "Enter the elements of the array: ";
+    for (int i = 0; i < n; ++i) {
+        cin >> arr[i];
+    }
+    int x;
+    cout << "Enter the target sum: ";
+    cin >> x;
+    if (hasPairWithSum(arr, n, x)) {
+        cout << "Yes, there exist two elements whose sum is exactly " << x << endl;
+    } else {
+        cout << "No, there are no two elements whose sum is exactly " << x << endl;
+    }
+    return 0;
+}
+
+Given an unsorted array and an element x, search x in the given array. Write recursive
+C++ code for this. If the element is not present, return -1.
+#include <iostream>
+using namespace std;
+int search(int arr[], int n, int x, int index) {
+    if (index == n) {
+        return -1;
+    }
+    if (arr[index] == x) {
+        return index;
+    }
+    return search(arr, n, x, index + 1);
+}
+int main() {
+    int n;
+    cout << "Enter the size of the array: ";
+    cin >> n;
+    int arr[n];
+    cout << "Enter the elements of the array: ";
+    for (int i = 0; i < n; ++i) {
+        cin >> arr[i];
+    }
+    int x;
+    cout << "Enter the element to search: ";
+    cin >> x;
+    int index = search(arr, n, x, 0);
+    if (index != -1) {
+        cout << "Element " << x << " found at index " << index << endl;
+    } else {
+        cout << "Element " << x << " not found in the array" << endl;
+    }
+    return 0;
+}
+
+Find the mth maximum number and Nth minimum number in an array and find the sum
+and difference of it.
+#include <iostream>
+#include <algorithm>
+using namespace std;
+void findMinMax(int arr[], int n, int m, int N) {
+    sort(arr, arr + n);
+    int nthMin = arr[N - 1];
+    sort(arr, arr + n, greater<int>());
+    int mthMax = arr[m - 1];
+    cout << "mth maximum number: " << mthMax << endl;
+    cout << "Nth minimum number: " << nthMin << endl;
+    cout << "Sum: " << mthMax + nthMin << endl;
+    cout << "Difference: " << mthMax - nthMin << endl;
+}
+int main() {
+    int n;
+    cout << "Enter the size of the array: ";
+    cin >> n;
+    int arr[n];
+    cout << "Enter the elements of the array: ";
+    for (int i = 0; i < n; ++i) {
+        cin >> arr[i];
+    }
+    int m, N;
+    cout << "Enter the value of m: ";
+    cin >> m;
+    cout << "Enter the value of N: ";
+    cin >> N;
+    findMinMax(arr, n, m, N);
+    return 0;
+}
+
+Write a program to convert a string into upper case and lower case and find the reverse
+of it.
+#include <iostream>
+#include <algorithm>
+using namespace std;
+string toUpperCase(string str) {
+    transform(str.begin(), str.end(), str.begin(), ::toupper);
+    return str;
+}
+string toLowerCase(string str) {
+    transform(str.begin(), str.end(), str.begin(), ::tolower);
+    return str;
+}
+string reverseString(string str) {
+    reverse(str.begin(), str.end());
+    return str;
+}
+int main() {
+    string input;
+    cout << "Enter a string: ";
+    getline(cin, input);
+    string upperCase = toUpperCase(input);
+    cout << "Uppercase: " << upperCase << endl;
+    string lowerCase = toLowerCase(input);
+    cout << "Lowercase: " << lowerCase << endl;
+    string reversed = reverseString(input);
+    cout << "Reverse: " << reversed << endl;
+    return 0;
+}
+
+Define a class Ele_Bill in C++ with the following descriptions: Private members: Cname
+of type character array , Pnumber of type long, No_of_units of type integer, Amount of
+type float. Calc_Amount( ): This member function should calculate the amount as
+No_of_units*Cost. Amount can be calculated according to the following conditions:
+No_of_units Cost, First 50 units Free, Next 100 units 0.80 @ unit, Next 200 units 1.00 @
+unit, Remaining units 1.20 @ unit. Public members: * A function Accept( ) which allows
+user to enter Cname, Pnumber, No_of_units and invoke function Calc_Amount(). * A
+function Display( ) to display the values of all the data members on the screen.
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Ele_Bill {
+private:
+    char Cname[50];
+    long Pnumber;
+    int No_of_units;
+    float Amount;
+    void Calc_Amount() {
+        if (No_of_units <= 50) {
+            Amount = 0;
+        } else if (No_of_units <= 150) {
+            Amount = (No_of_units - 50) * 0.80;
+        } else if (No_of_units <= 350) {
+            Amount = 100 * 0.80 + (No_of_units - 150) * 1.00;
+        } else {
+            Amount = 100 * 0.80 + 200 * 1.00 + (No_of_units - 350) * 1.20;
+        }
+    }
+public:
+    void Accept() {
+        cout << "Enter customer name: ";
+        cin.getline(Cname, 50);
+        cout << "Enter phone number: ";
+        cin >> Pnumber;
+        cout << "Enter number of units: ";
+        cin >> No_of_units;
+        Calc_Amount();
+    }
+    void Display() {
+        cout << "Customer name: " << Cname << endl;
+        cout << "Phone number: " << Pnumber << endl;
+        cout << "Number of units: " << No_of_units << endl;
+        cout << "Amount: " << Amount << endl;
+    }
+};
+int main() {
+    Ele_Bill bill;
+    bill.Accept();
+    bill.Display();
+    return 0;
+}
+
+Convert binary to octal using constructor
+#include <iostream>
+#include <cmath>
+using namespace std;
+class BinaryToOctal {
+private:
+    long long binaryNumber;
+    int octalNumber;
+public:
+    BinaryToOctal(long long binary) : binaryNumber(binary), octalNumber(0) {}
+    void convertToOctal() {
+        int decimalNumber = 0, i = 0;
+        while (binaryNumber != 0) {
+            int remainder = binaryNumber % 10;
+            decimalNumber += remainder * pow(2, i);
+            ++i;
+            binaryNumber /= 10;
+        }
+        i = 1;
+        while (decimalNumber != 0) {
+            octalNumber += (decimalNumber % 8) * i;
+            decimalNumber /= 8;
+            i *= 10;
+        }
+    }
+    void displayOctal() {
+        cout << "Octal equivalent: " << octalNumber << endl;
+    }
+};
+int main() {
+    long long binary;
+    cout << "Enter a binary number: ";
+    cin >> binary;
+    BinaryToOctal bto(binary);
+    bto.convertToOctal();
+    bto.displayOctal();
+    return 0;
+}
+
+Write a C++ program to find the number and sum of all integer between 100 and 200
+which are divisible by 9 with constructor and destructor.
+#include <iostream>
+using namespace std;
+class DivisibleBy9 {
+private:
+    int count;
+    int sum;
+public:
+    DivisibleBy9() : count(0), sum(0) {}
+    ~DivisibleBy9() {
+        cout << "Number of integers divisible by 9: " << count << endl;
+        cout << "Sum of integers divisible by 9: " << sum << endl;
+    }
+    void findAndSumDivisibleBy9() {
+        for (int i = 100; i <= 200; ++i) {
+            if (i % 9 == 0) {
+                count++;
+                sum += i;
+            }
+        }
+    }
+};
+int main() {
+    DivisibleBy9 obj;
+    obj.findAndSumDivisibleBy9();
+    return 0;
+}
+
+
+
+
