@@ -1,0 +1,36 @@
+#include <iostream>
+using namespace std;
+void sortA1RelativeToA2(int A1[], int A2[], int n, int m) {
+    int freq[1001] = {0}; 
+    int positions[1001];
+    for (int i = 0; i < m; ++i) {
+        positions[A2[i]] = -1;
+    }  
+    for (int i = 0; i < m; ++i) {
+        positions[A2[i]] = i;
+    }
+    for (int i = 0; i < n - 1; ++i) {
+        int min_idx = i;
+        for (int j = i + 1; j < n; ++j) {
+            if (positions[A1[j]] < positions[A1[min_idx]]) {
+                min_idx = j;
+            }
+        }
+        int temp = A1[i];
+        A1[i] = A1[min_idx];
+        A1[min_idx] = temp;
+    }
+}
+int main() {
+    int A1[] = {2, 1, 3, 5, 4};
+    int A2[] = {1, 2, 3, 4, 5};
+    int n = sizeof(A1) / sizeof(A1[0]);
+    int m = sizeof(A2) / sizeof(A2[0]);
+    sortA1RelativeToA2(A1, A2, n, m);
+    cout << "Sorted A1 relative to A2: ";
+    for (int i = 0; i < n; ++i) {
+        cout << A1[i] << " ";
+    }
+    cout << endl;
+    return 0;
+}
